@@ -1,6 +1,0 @@
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - sqlite3
-onlyBuiltDependencies:
-  - better-sqlite3
