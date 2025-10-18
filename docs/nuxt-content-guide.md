@@ -276,6 +276,135 @@ export default defineNuxtConfig({
 })
 ```
 
+**重要なポイント:**
+
+Nuxt Studioは**コンテンツ管理に特化**したツールです。
+
+#### Studioで編集できるファイル
+
+✅ **編集可能:**
+- `/content` ディレクトリ内のファイル（Markdown, YAML, JSON）
+- `/public` フォルダ（メディア管理）
+- `app.config.ts`（設定ファイル）
+
+❌ **編集不可:**
+- **Vueファイル (`.vue`)** - 直接編集できない
+- `nuxt.config.ts`
+- `pages/`, `layouts/`, `composables/` などのコードファイル
+
+#### 開発者と編集者の役割分担
+
+| 役割 | 担当者 | ツール | 編集対象 |
+|------|--------|--------|---------|
+| **開発・設計** | 開発者 | VSCode等 | `.vue`, スキーマ定義, 設定ファイル |
+| **コンテンツ編集** | 非技術者 | Nuxt Studio | `.md`, `.yml`, `.json` |
+| **コンポーネント作成** | 開発者 | VSCode等 | `/components/content/` |
+| **コンポーネント利用** | 非技術者 | Nuxt Studio | MDC構文で配置・編集 |
+
+#### 事前設計
+
+**Nuxt Studioを効果的に活用するには、開発者が最初にCMS構造をしっかり設計することが重要**
+
+**開発者がやること（最初に1回）:**
+
+1. **スキーマ設計** - 厳密な型定義で自動フォーム生成
+```typescript
+// content.config.ts
+export default defineContentConfig({
+  collections: {
+    blog: defineCollection({
+      type: 'page',
+      source: 'blog/**/*.md',
+      schema: z.object({
+        title: z.string(),
+        category: z.enum(['tech', 'design', 'business']),
+        tags: z.array(z.string()).min(1).max(5),
+        publishedAt: z.date(),
+        featured: z.boolean().default(false)
+      })
+    })
+  }
+})
+```
+
+2. **再利用可能なVueコンポーネント作成**
+```vue
+<!-- components/content/FeatureCard.vue -->
+<script setup lang="ts">
+defineProps<{
+  title: string
+  icon: string
+  color?: 'blue' | 'purple' | 'green'
+}>()
+</script>
+
+<template>
+  <div :class="['feature-card', `color-${color || 'blue'}`]">
+    <div class="icon">{{ icon }}</div>
+    <h3>{{ title }}</h3>
+    <slot />
+  </div>
+</template>
+```
+
+3. **コンテンツ構造の設計**
+```
+content/
+  blog/           # ブログ記事
+  products/       # 製品情報
+  pages/          # 固定ページ
+  .docs/          # 利用可能なコンポーネントのドキュメント
+```
+
+**編集者がやること（日常的に）:**
+
+Studio上で：
+- Markdownエディタで記事作成
+- 自動生成されたフォームでメタデータ入力
+- `/` キーでコンポーネント一覧表示 → 挿入
+- ビジュアルエディタでprops/slotsを編集
+- プレビュー確認 → Git経由で公開
+
+**実際の編集例:**
+```markdown
+<!-- Studioのビジュアルエディタで編集 -->
+---
+title: New Product Launch
+category: business
+tags: [product, launch]
+publishedAt: 2025-01-18
+featured: true
+---
+
+# Introducing Our Latest Product
+
+::feature-card{title="Fast Performance" icon="🚀" color="blue"}
+Blazing fast with optimized algorithms.
+::
+
+::feature-card{title="Easy to Use" icon="✨" color="purple"}
+Intuitive interface for everyone.
+::
+```
+
+#### ワークフロー
+
+```mermaid
+開発者（最初）
+  ↓
+スキーマ定義 + Vueコンポーネント作成
+  ↓
+Studio有効化
+  ↓
+編集者（日常）
+  ↓
+Studioでコンテンツ編集
+  ↓
+開発者は新機能開発に集中
+```
+
+**結論:** 最初の設計が9割！しっかりとしたスキーマとコンポーネント設計により、非技術者だけで日々のコンテンツ運用が可能になります。
+
 ---
 
 ## できないこと
@@ -389,14 +518,15 @@ You can use components!
 
 ### 2. YAML (.yml, .yaml)
 
-**用途:** 構造化データ、設定ファイル
+**用途:** 構造化データ、設定ファイル、コンテンツページ
 
 **特徴:**
 - 読みやすい
 - ネストした構造を簡潔に表現
 - `body`フィールドにMarkdownを埋め込み可能
+- **AST構造を直接記述してHTMLを定義可能**
 
-**例:**
+**例1: Markdownを埋め込む（推奨）**
 ```yaml
 title: My Article
 author: John Doe
@@ -412,16 +542,47 @@ body: |
   This is markdown in YAML!
 ```
 
+**例2: AST構造でHTMLを直接定義**
+```yaml
+title: Custom HTML Page
+description: YAMLでHTMLを直接定義
+body:
+  type: root
+  children:
+    - type: element
+      tag: div
+      properties:
+        className:
+          - hero-section
+        style: "background: #667eea; padding: 2rem; color: white;"
+      children:
+        - type: element
+          tag: h1
+          properties:
+            className:
+              - hero-title
+          children:
+            - type: text
+              value: "Welcome"
+        - type: element
+          tag: p
+          children:
+            - type: text
+              value: "This HTML is defined in YAML using AST structure"
+```
+
+この方法により、**MarkdownではなくYAMLでHTMLの構造を完全にコントロール**できます。
+
 ### 3. JSON (.json)
 
-**用途:** データ管理、API風のコンテンツ
+**用途:** データ管理、API風のコンテンツ、プログラマティックなHTML生成
 
 **特徴:**
 - プログラムで生成しやすい
 - 厳密な構造
-- AST構造を直接記述可能（高度）
+- **AST構造を直接記述してHTMLを完全にコントロール可能**
 
-**例:**
+**例1: データ管理用**
 ```json
 {
   "name": "John Doe",
@@ -430,28 +591,73 @@ body: |
 }
 ```
 
-**AST構造の例:**
+**例2: AST構造でHTMLを直接定義**
 ```json
 {
-  "title": "Article",
+  "title": "Custom HTML Article",
+  "description": "JSONでHTMLを完全定義",
   "body": {
     "type": "root",
     "children": [
       {
         "type": "element",
-        "tag": "h1",
+        "tag": "div",
         "properties": {
-          "className": ["title"],
-          "id": "main-title"
+          "className": ["article-header"],
+          "style": "background: linear-gradient(to right, #667eea, #764ba2); padding: 3rem; color: white; border-radius: 8px;"
         },
         "children": [
-          { "type": "text", "value": "Hello" }
+          {
+            "type": "element",
+            "tag": "h1",
+            "properties": {
+              "className": ["title"],
+              "id": "main-title"
+            },
+            "children": [
+              { "type": "text", "value": "Beautiful Header" }
+            ]
+          },
+          {
+            "type": "element",
+            "tag": "p",
+            "properties": {
+              "className": ["subtitle"]
+            },
+            "children": [
+              { "type": "text", "value": "Defined entirely in JSON" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "element",
+        "tag": "article",
+        "properties": {
+          "className": ["content"]
+        },
+        "children": [
+          {
+            "type": "element",
+            "tag": "p",
+            "children": [
+              { "type": "text", "value": "This is a paragraph with " },
+              {
+                "type": "element",
+                "tag": "strong",
+                "children": [{ "type": "text", "value": "bold text" }]
+              },
+              { "type": "text", "value": "." }
+            ]
+          }
         ]
       }
     ]
   }
 }
 ```
+
+この方法により、**Markdownを経由せずJSON/YAMLだけでリッチなHTMLページを構築**できます。プログラムでコンテンツを生成する場合に特に有用です。
 
 ### 4. CSV (.csv)
 
@@ -474,6 +680,174 @@ const users = await queryCollection('users')
   .where('role', '=', 'Admin')
   .all()
 ```
+
+### AST（Abstract Syntax Tree）構造について
+
+#### AST構造とは
+
+Nuxt Contentは内部でMarkdownを**AST（抽象構文木）**に変換して処理します。この構造を理解することで、JSON/YAMLで直接HTMLを定義できます。
+
+#### HAST（HTML AST）仕様
+
+Nuxt Contentが使用するAST形式は**HAST（Hypertext Abstract Syntax Tree）**に基づいています。
+
+**基本的なノード構造:**
+
+```typescript
+// Element（HTML要素）
+{
+  type: 'element',
+  tagName: 'div',  // HTMLタグ名
+  properties: {    // HTML属性
+    className: ['class1', 'class2'],  // class属性（配列）
+    id: 'my-id',                      // id属性
+    style: 'color: red;',             // style属性（文字列）
+    dataCustom: 'value',              // data-custom属性（camelCase）
+    href: '/link',                    // その他の属性
+    ariaLabel: 'Label'                // aria-label（camelCase）
+  },
+  children: [...]  // 子ノード
+}
+
+// Text（テキストノード）
+{
+  type: 'text',
+  value: 'Hello World'
+}
+
+// Root（ルートノード）
+{
+  type: 'root',
+  children: [...]
+}
+```
+
+#### プロパティの命名規則
+
+HASTでは、HTML属性がcamelCaseに変換されます：
+
+| HTML | HAST |
+|------|------|
+| `class` | `className` |
+| `for` | `htmlFor` |
+| `aria-label` | `ariaLabel` |
+| `data-custom` | `dataCustom` |
+| `tabindex` | `tabIndex` |
+
+#### 実用例: 複雑なHTML構造
+
+```json
+{
+  "title": "Complex Layout",
+  "body": {
+    "type": "root",
+    "children": [
+      {
+        "type": "element",
+        "tag": "section",
+        "properties": {
+          "className": ["hero"],
+          "id": "top"
+        },
+        "children": [
+          {
+            "type": "element",
+            "tag": "h1",
+            "children": [{ "type": "text", "value": "Title" }]
+          },
+          {
+            "type": "element",
+            "tag": "div",
+            "properties": {
+              "className": ["flex", "gap-4"]
+            },
+            "children": [
+              {
+                "type": "element",
+                "tag": "img",
+                "properties": {
+                  "src": "/image.jpg",
+                  "alt": "Description",
+                  "width": "800",
+                  "height": "600"
+                },
+                "children": []
+              },
+              {
+                "type": "element",
+                "tag": "p",
+                "children": [
+                  { "type": "text", "value": "Text with " },
+                  {
+                    "type": "element",
+                    "tag": "a",
+                    "properties": {
+                      "href": "https://example.com",
+                      "target": "_blank",
+                      "rel": "noopener"
+                    },
+                    "children": [{ "type": "text", "value": "link" }]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### Markdownとの比較
+
+**Markdown:**
+```markdown
+# Hello
+
+This is **bold** text.
+```
+
+**AST（内部変換後）:**
+```json
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "element",
+      "tag": "h1",
+      "children": [{ "type": "text", "value": "Hello" }]
+    },
+    {
+      "type": "element",
+      "tag": "p",
+      "children": [
+        { "type": "text", "value": "This is " },
+        {
+          "type": "element",
+          "tag": "strong",
+          "children": [{ "type": "text", "value": "bold" }]
+        },
+        { "type": "text", "value": " text." }
+      ]
+    }
+  ]
+}
+```
+
+#### 使い分けのガイドライン
+
+| 方法 | 適した用途 | メリット | デメリット |
+|------|-----------|---------|----------|
+| **Markdown** | 記事、ドキュメント | 書きやすい、読みやすい | 複雑な構造は難しい |
+| **YAML + Markdown** | メタデータ + コンテンツ | バランスが良い | 中程度の学習コスト |
+| **YAML + AST** | プログラム生成、カスタムUI | 構造化、型安全 | 記述が冗長 |
+| **JSON + AST** | API生成、動的コンテンツ | プログラム生成容易 | 手書きには不向き |
+
+**推奨:**
+- 人が書く → **Markdown**
+- データ + コンテンツ → **YAML + Markdown**
+- プログラム生成 → **JSON/YAML + AST**
 
 ---
 

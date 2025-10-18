@@ -1,0 +1,70 @@
+title: YAMLでのコンポーネント呼び出しデモ
+description: YAMLのbodyフィールドでMDC構文を使った実例
+author: Demo Author
+publishedAt: 2025-01-18
+tags:
+  - yaml
+  - components
+  - demo
+
+# bodyフィールドにMarkdown + MDC構文を記述
+body: |
+  # YAMLでのコンポーネント呼び出しデモ
+
+  YAMLファイルの`body`フィールドにMarkdownとMDC構文を記述できます。
+
+  ## YAMLの利点
+
+  ::alert{type="info"}
+  YAMLはメタデータとコンテンツを分けて管理できるのが特徴です。
+  ::
+
+  ### メタデータ部分
+
+  このページのメタデータ：
+  - タイトル: YAMLでのコンポーネント呼び出しデモ
+  - 著者: Demo Author
+  - 公開日: 2025-01-18
+  - タグ: yaml, components, demo
+
+  ### コンテンツ部分
+
+  ::card{title="YAMLの特徴" icon="📋" color="blue"}
+  - 読みやすい構造
+  - メタデータとコンテンツの分離
+  - MDC構文がそのまま使える
+  ::
+
+  ## 実際のコンポーネント呼び出し
+
+  ::feature-card{title="データ管理" icon="💾" color="purple"}
+  YAMLはデータ管理に適しています。
+  構造化されたメタデータと、リッチなコンテンツを同時に扱えます。
+  ::
+
+  ::feature-card{title="保守性" icon="🔧" color="green"}
+  メタデータとコンテンツが分離されているため、
+  管理がしやすく、変更も簡単です。
+  ::
+
+  ## 複数のコンポーネント
+
+  ::alert{type="warning"}
+  YAMLの`body`フィールドは文字列なので、インデントに注意が必要です。
+  ::
+
+  ::card{title="ベストプラクティス" icon="⭐" color="red"}
+  YAMLを使う場合：
+
+  1. メタデータは通常のYAML形式
+  2. コンテンツは`body`フィールドにMarkdown
+  3. MDC構文でコンポーネント呼び出し
+
+  この組み合わせが最も使いやすいです。
+  ::
+
+  ## まとめ
+
+  ::alert{type="success"}
+  ✅ YAMLファイルからもコンポーネントが正常に呼び出せました！
+  ::

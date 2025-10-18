@@ -1,0 +1,8 @@
+{
+  "title": "JSONでのコンポーネント呼び出しデモ",
+  "description": "JSONのbodyフィールドでMDC構文を使った実例",
+  "author": "Demo Author",
+  "publishedAt": "2025-01-18",
+  "tags": ["json", "components", "demo"],
+  "body": "# JSONでのコンポーネント呼び出しデモ\n\nJSONファイルの`body`フィールドにMarkdownとMDC構文を記述できます。\n\n## JSONの注意点\n\n::alert{type=\"warning\"}\nJSONでは改行を`\\n`でエスケープする必要があり、やや読みにくくなります。\n::\n\n### 基本的な使い方\n\n::card{title=\"JSON形式\" icon=\"🔤\" color=\"blue\"}\nJSONはプログラムでの生成に適しています。\nAPIから取得したデータをそのまま保存できます。\n::\n\n## コンポーネント呼び出し例\n\n::feature-card{title=\"プログラム生成\" icon=\"⚙️\" color=\"purple\"}\nJSONはプログラムから動的に生成するのに最適です。\nデータベースやAPIのレスポンスをそのまま使えます。\n::\n\n::feature-card{title=\"型安全\" icon=\"🛡️\" color=\"green\"}\nTypeScriptと組み合わせることで、\n完全な型安全性を実現できます。\n::\n\n## 推奨事項\n\n::alert{type=\"info\"}\n💡 **ヒント:** 人が手書きする場合はMarkdownやYAMLを推奨します。\nJSONはプログラム生成時に使用するのがベストです。\n::\n\n::card{title=\"使い分け\" icon=\"🎯\" color=\"red\"}\n- 手書き → Markdown/YAML\n- プログラム生成 → JSON\n- データ管理 → YAML/JSON\n- リッチコンテンツ → Markdown\n::\n\n## まとめ\n\n::alert{type=\"success\"}\n✅ JSONファイルからもコンポーネントが正常に動作しました！\n::"
+}
