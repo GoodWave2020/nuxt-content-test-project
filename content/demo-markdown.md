@@ -106,10 +106,6 @@ description: MDC構文を使ったコンポーネントの実例
 
 ::card{title="詳細情報" icon="ℹ️" color="blue"}
 上記の機能について詳しく知りたい場合は、ドキュメントを参照してください。
-
-- [機能1の詳細](/docs/feature1)
-- [機能2の詳細](/docs/feature2)
-- [機能3の詳細](/docs/feature3)
 ::
 
 ---
