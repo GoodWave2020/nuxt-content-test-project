@@ -640,8 +640,6 @@ const sectionComponents = {
 ## 参考リンク
 
 - [MDC構文ドキュメント](https://content.nuxt.com/docs/files/markdown)
-- [Nuxt Content要約](./nuxt-content-summary.md)
-- [詳細ガイド](./nuxt-content-guide.md)
 
 ---
 
