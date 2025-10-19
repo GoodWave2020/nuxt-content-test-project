@@ -1,0 +1,412 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="importmap">{"imports":{"#entry":"/_nuxt/D5yDsYVe.js"}}</script>
+<title>コンポーネント呼び出しパターン集</title>
+<style>.container[data-v-cf7783f3]{margin:0 auto;max-width:1200px;padding:2rem}.error[data-v-cf7783f3]{color:#666;padding:4rem 2rem;text-align:center}.prose[data-v-cf7783f3]{line-height:1.75}.prose[data-v-cf7783f3] h1{color:#1a202c;font-size:2.5rem;font-weight:700;margin-bottom:1rem;margin-top:2rem}.prose[data-v-cf7783f3] h2{border-bottom:2px solid #e2e8f0;color:#2d3748;font-size:2rem;font-weight:700;margin-bottom:1rem;margin-top:2.5rem;padding-bottom:.5rem}.prose[data-v-cf7783f3] h3{color:#4a5568;font-size:1.5rem;font-weight:600;margin-bottom:.75rem;margin-top:2rem}.prose[data-v-cf7783f3] h4{color:#718096;font-size:1.25rem;font-weight:600;margin-bottom:.5rem;margin-top:1.5rem}.prose[data-v-cf7783f3] p{color:#4a5568;margin-bottom:1rem}.prose[data-v-cf7783f3] ul{list-style:disc;margin-bottom:1rem;padding-left:1.5rem}.prose[data-v-cf7783f3] ol{list-style:decimal;margin-bottom:1rem;padding-left:1.5rem}.prose[data-v-cf7783f3] li{color:#4a5568;margin-bottom:.5rem}.prose[data-v-cf7783f3] code{background:#f7fafc;border-radius:.25rem;color:#e53e3e;font-family:Courier New,monospace;font-size:.875rem;padding:.2rem .4rem}.prose[data-v-cf7783f3] pre{background:#2d3748;border-radius:.5rem;color:#e2e8f0;font-size:.875rem;line-height:1.6;margin-bottom:1.5rem;overflow-x:auto;padding:1.5rem}.prose[data-v-cf7783f3] pre code{background:transparent;color:inherit;font-size:inherit;padding:0}.prose[data-v-cf7783f3] blockquote{background:#f7fafc;border-left:4px solid #667eea;border-radius:.25rem;color:#718096;font-style:italic;margin-bottom:1rem;margin-left:0;padding:1rem}.prose[data-v-cf7783f3] table{border-collapse:collapse;border-radius:.5rem;margin-bottom:1.5rem;overflow:hidden;width:100%}.prose[data-v-cf7783f3] thead{background:#667eea;color:#fff}.prose[data-v-cf7783f3] th{border-bottom:2px solid #4c51bf;font-weight:600;padding:.75rem 1rem;text-align:left}.prose[data-v-cf7783f3] td{border-bottom:1px solid #e2e8f0;color:#4a5568;padding:.75rem 1rem}.prose[data-v-cf7783f3] tbody tr:hover{background:#f7fafc}.prose[data-v-cf7783f3] a{color:#667eea;text-decoration:underline;transition:color .2s}.prose[data-v-cf7783f3] a:hover{color:#4c51bf}.prose[data-v-cf7783f3] strong{color:#2d3748;font-weight:600}.prose[data-v-cf7783f3] em{color:#718096;font-style:italic}.prose[data-v-cf7783f3] hr{border:0;border-top:2px solid #e2e8f0;margin:3rem 0}@media(max-width:768px){.container[data-v-cf7783f3]{padding:1rem}.prose[data-v-cf7783f3] h1{font-size:2rem}.prose[data-v-cf7783f3] h2{font-size:1.5rem}.prose[data-v-cf7783f3] h3{font-size:1.25rem}.prose[data-v-cf7783f3] pre{font-size:.75rem;padding:1rem}.prose[data-v-cf7783f3] table{font-size:.875rem}.prose[data-v-cf7783f3] td,.prose[data-v-cf7783f3] th{padding:.5rem .75rem}}</style>
+<style>pre code .line{display:block}</style>
+<link rel="preload" as="fetch" crossorigin="anonymous" href="/component-patterns/_payload.json?0ab3069c-ab64-4151-98ee-55cf9c7d7417">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/D5yDsYVe.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/D8-POHoO.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/CFi5dQZw.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BnMVNXmZ.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/B7ZMNPVt.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/DG20Dkve.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BKkvxQvX.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/3cFmk8cf.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/DA2AoLOC.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/DUcApBwD.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BN3ahXvP.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/CUY7QWTx.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/ClxyLF6U.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BycnwW6Y.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BuRyefjE.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/CqffaeMw.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/Ctsjf0uA.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/lTUbTzQ_.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/UC2NH0oG.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BHhd13iR.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/CPwxeaxe.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BYqfK9zY.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/Crqh2M9d.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/AlRM78W_.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/CTrJoLbH.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/BZS7U9Ta.js">
+<link rel="modulepreload" as="script" crossorigin href="/_nuxt/B_0Am5x8.js">
+<link rel="preload" as="fetch" fetchpriority="low" crossorigin="anonymous" href="/_nuxt/builds/meta/0ab3069c-ab64-4151-98ee-55cf9c7d7417.json">
+<link rel="prefetch" as="style" crossorigin href="/_nuxt/index.q9uSUcPY.css">
+<link rel="prefetch" as="script" crossorigin href="/_nuxt/DzX1NXIl.js">
+<link rel="prefetch" as="script" crossorigin href="/_nuxt/CwbT-IZ2.js">
+<link rel="prefetch" as="script" crossorigin href="/_nuxt/BSZphACy.js">
+<link rel="prefetch" as="script" crossorigin href="/_nuxt/B5IIkWfj.js">
+<meta name="description" content="Nuxt Contentでコンポーネントを呼び出す様々な方法">
+<script type="module" src="/_nuxt/D5yDsYVe.js" crossorigin></script></head><body><div id="__nuxt"><!--[--><div class="container" data-v-cf7783f3><div class="prose" data-v-cf7783f3><h1 id="コンポーネント呼び出しパターン集"><!--[-->コンポーネント呼び出しパターン集<!--]--></h1><blockquote><!--[--><p><!--[-->Nuxt ContentでVueコンポーネントを呼び出す様々な方法<!--]--></p><!--]--></blockquote><h2 id="目次"><a href="#目次"><!--[-->📖 目次<!--]--></a></h2><ol><!--[--><li><!--[--><a href="#markdown-mdc%E6%A7%8B%E6%96%87"><!--[-->Markdown (MDC構文)<!--]--></a><!--]--></li><li><!--[--><a href="#yaml"><!--[-->YAML<!--]--></a><!--]--></li><li><!--[--><a href="#json"><!--[-->JSON<!--]--></a><!--]--></li><li><!--[--><a href="#%E5%AE%9F%E7%94%A8%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E9%9B%86"><!--[-->実用パターン集<!--]--></a><!--]--></li><!--]--></ol><hr><h2 id="markdown-mdc構文"><a href="#markdown-mdc構文"><!--[-->Markdown (MDC構文)<!--]--></a></h2><h3 id="基本パターン"><a href="#基本パターン"><!--[-->基本パターン<!--]--></a></h3><h4 id="_1-シンプルなコンポーネント"><a href="#_1-シンプルなコンポーネント"><!--[-->1. シンプルなコンポーネント<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::alert
+</span></span><span class="line" line="2"><span>これは警告メッセージです
+</span></span><span class="line" line="3"><span>::
+</span></span></code><!--]--></pre><h4 id="_2-props指定インライン"><a href="#_2-props指定インライン"><!--[-->2. Props指定（インライン）<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::alert{type=&quot;warning&quot; dismissible}
+</span></span><span class="line" line="2"><span>これは警告メッセージです
+</span></span><span class="line" line="3"><span>::
+</span></span></code><!--]--></pre><h4 id="_3-props指定yaml形式"><a href="#_3-props指定yaml形式"><!--[-->3. Props指定（YAML形式）<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::card
+</span></span><span class="line" line="2"><span>---
+</span></span><span class="line" line="3"><span>title: &quot;カードタイトル&quot;
+</span></span><span class="line" line="4"><span>icon: &quot;rocket&quot;
+</span></span><span class="line" line="5"><span>color: &quot;blue&quot;
+</span></span><span class="line" line="6"><span>---
+</span></span><span class="line" line="7"><span>カードの本文内容
+</span></span><span class="line" line="8"><span>::
+</span></span></code><!--]--></pre><h4 id="_4-名前付きスロット"><a href="#_4-名前付きスロット"><!--[-->4. 名前付きスロット<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::hero
+</span></span><span class="line" line="2"><span>メインタイトル
+</span></span><span class="line" line="3"><span emptylineplaceholder="true">
+</span></span><span class="line" line="4"><span>#description
+</span></span><span class="line" line="5"><span>ヒーローの説明文
+</span></span><span class="line" line="6"><span emptylineplaceholder="true">
+</span></span><span class="line" line="7"><span>#cta
+</span></span><span class="line" line="8"><span>[始める](/start)
+</span></span><span class="line" line="9"><span>::
+</span></span></code><!--]--></pre><h4 id="_5-ネストされたコンポーネント"><a href="#_5-ネストされたコンポーネント"><!--[-->5. ネストされたコンポーネント<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::tabs
+</span></span><span class="line" line="2"><span>  :::tab{label=&quot;タブ1&quot;}
+</span></span><span class="line" line="3"><span>  タブ1の内容
+</span></span><span class="line" line="4"><span>  :::
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span>  :::tab{label=&quot;タブ2&quot;}
+</span></span><span class="line" line="7"><span>  タブ2の内容
+</span></span><span class="line" line="8"><span>  :::
+</span></span><span class="line" line="9"><span>::
+</span></span></code><!--]--></pre><hr><h2 id="yaml"><a href="#yaml"><!--[-->YAML<!--]--></a></h2><h3 id="パターン1-markdownで呼び出し"><a href="#パターン1-markdownで呼び出し"><!--[-->パターン1: Markdownで呼び出し<!--]--></a></h3><p><!--[--><strong><!--[-->ファイル:<!--]--></strong> <code><!--[-->content/page.yml<!--]--></code><!--]--></p><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">title</span><span class="sVt8B">: </span><span class="sZZnC">ページタイトル
+</span></span><span class="line" line="2"><span class="s9eBZ">description</span><span class="sVt8B">: </span><span class="sZZnC">説明文
+</span></span><span class="line" line="3"><span class="s9eBZ">body</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="4"><span class="sZZnC">  # 見出し
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span class="sZZnC">  ::alert{type=&quot;info&quot;}
+</span></span><span class="line" line="7"><span class="sZZnC">  YAMLのbodyフィールド内でMDC構文が使えます
+</span></span><span class="line" line="8"><span class="sZZnC">  ::
+</span></span><span class="line" line="9"><span emptylineplaceholder="true">
+</span></span><span class="line" line="10"><span class="sZZnC">  ::card{title=&quot;機能カード&quot; icon=&quot;star&quot;}
+</span></span><span class="line" line="11"><span class="sZZnC">  カードの内容
+</span></span><span class="line" line="12"><span class="sZZnC">  ::
+</span></span></code><!--]--></pre><h3 id="パターン2-ast構造で直接定義"><a href="#パターン2-ast構造で直接定義"><!--[-->パターン2: AST構造で直接定義<!--]--></a></h3><p><!--[--><strong><!--[-->コンポーネントを模した構造（非推奨）<!--]--></strong><!--]--></p><p><!--[-->YAMLのAST構造では、Vueコンポーネントを直接表現できません。
+代わりに、<strong><!--[-->HTML要素<!--]--></strong>としてレンダリングし、ページ側でカスタムコンポーネントに置き換える必要があります。<!--]--></p><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">title</span><span class="sVt8B">: </span><span class="sZZnC">カスタムページ
+</span></span><span class="line" line="2"><span class="s9eBZ">body</span><span class="sVt8B">:
+</span></span><span class="line" line="3"><span class="s9eBZ">  type</span><span class="sVt8B">: </span><span class="sZZnC">root
+</span></span><span class="line" line="4"><span class="s9eBZ">  children</span><span class="sVt8B">:
+</span></span><span class="line" line="5"><span class="sJ8bj">    # data-component属性でマーカー設置
+</span></span><span class="line" line="6"><span class="sVt8B">    - </span><span class="s9eBZ">type</span><span class="sVt8B">: </span><span class="sZZnC">element
+</span></span><span class="line" line="7"><span class="s9eBZ">      tag</span><span class="sVt8B">: </span><span class="sZZnC">div
+</span></span><span class="line" line="8"><span class="s9eBZ">      properties</span><span class="sVt8B">:
+</span></span><span class="line" line="9"><span class="s9eBZ">        dataComponent</span><span class="sVt8B">: </span><span class="sZZnC">&quot;FeatureCard&quot;
+</span></span><span class="line" line="10"><span class="s9eBZ">        dataProps</span><span class="sVt8B">: </span><span class="sZZnC">&#39;{&quot;title&quot;: &quot;Fast&quot;, &quot;icon&quot;: &quot;rocket&quot;}&#39;
+</span></span><span class="line" line="11"><span class="s9eBZ">        className</span><span class="sVt8B">:
+</span></span><span class="line" line="12"><span class="sVt8B">          - </span><span class="sZZnC">component-placeholder
+</span></span><span class="line" line="13"><span class="s9eBZ">      children</span><span class="sVt8B">:
+</span></span><span class="line" line="14"><span class="sVt8B">        - </span><span class="s9eBZ">type</span><span class="sVt8B">: </span><span class="sZZnC">text
+</span></span><span class="line" line="15"><span class="s9eBZ">          value</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Component will be rendered here&quot;
+</span></span></code><!--]--></pre><p><!--[--><strong><!--[-->ページ側での処理が必要:<!--]--></strong><!--]--></p><pre class="language-vue shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">&lt;</span><span class="s9eBZ">script</span><span class="sScJk"> setup</span><span class="sScJk"> lang</span><span class="sVt8B">=</span><span class="sZZnC">&quot;ts&quot;</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="2"><span class="szBVR">import</span><span class="sVt8B"> { h } </span><span class="szBVR">from</span><span class="sZZnC"> &#39;vue&#39;
+</span></span><span class="line" line="3"><span emptylineplaceholder="true">
+</span></span><span class="line" line="4"><span class="szBVR">const</span><span class="sj4cs"> components</span><span class="szBVR"> =</span><span class="sVt8B"> {
+</span></span><span class="line" line="5"><span class="sScJk">  div</span><span class="sVt8B">: (</span><span class="s4XuR">props</span><span class="sVt8B">, </span><span class="s4XuR">context</span><span class="sVt8B">) </span><span class="szBVR">=&gt;</span><span class="sVt8B"> {
+</span></span><span class="line" line="6"><span class="szBVR">    if</span><span class="sVt8B"> (props[</span><span class="sZZnC">&#39;data-component&#39;</span><span class="sVt8B">]) {
+</span></span><span class="line" line="7"><span class="szBVR">      const</span><span class="sj4cs"> componentName</span><span class="szBVR"> =</span><span class="sVt8B"> props[</span><span class="sZZnC">&#39;data-component&#39;</span><span class="sVt8B">]
+</span></span><span class="line" line="8"><span class="szBVR">      const</span><span class="sj4cs"> componentProps</span><span class="szBVR"> =</span><span class="sj4cs"> JSON</span><span class="sVt8B">.</span><span class="sScJk">parse</span><span class="sVt8B">(props[</span><span class="sZZnC">&#39;data-props&#39;</span><span class="sVt8B">] </span><span class="szBVR">||</span><span class="sZZnC"> &#39;{}&#39;</span><span class="sVt8B">)
+</span></span><span class="line" line="9"><span emptylineplaceholder="true">
+</span></span><span class="line" line="10"><span class="sJ8bj">      // 動的にコンポーネントをレンダリング
+</span></span><span class="line" line="11"><span class="szBVR">      const</span><span class="sj4cs"> Component</span><span class="szBVR"> =</span><span class="sScJk"> resolveComponent</span><span class="sVt8B">(componentName)
+</span></span><span class="line" line="12"><span class="szBVR">      return</span><span class="sScJk"> h</span><span class="sVt8B">(Component, componentProps)
+</span></span><span class="line" line="13"><span class="sVt8B">    }
+</span></span><span class="line" line="14"><span class="szBVR">    return</span><span class="sScJk"> h</span><span class="sVt8B">(</span><span class="sZZnC">&#39;div&#39;</span><span class="sVt8B">, props, context.slots)
+</span></span><span class="line" line="15"><span class="sVt8B">  }
+</span></span><span class="line" line="16"><span class="sVt8B">}
+</span></span><span class="line" line="17"><span class="sVt8B">&lt;/</span><span class="s9eBZ">script</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="18"><span emptylineplaceholder="true">
+</span></span><span class="line" line="19"><span class="sVt8B">&lt;</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="20"><span class="sVt8B">  &lt;</span><span class="s9eBZ">ContentRenderer</span><span class="sVt8B"> :</span><span class="sScJk">value</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">page</span><span class="sZZnC">&quot;</span><span class="sVt8B"> :</span><span class="sScJk">components</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">components</span><span class="sZZnC">&quot;</span><span class="sVt8B"> /&gt;
+</span></span><span class="line" line="21"><span class="sVt8B">&lt;/</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span></code><!--]--></pre><hr><h2 id="json"><a href="#json"><!--[-->JSON<!--]--></a></h2><h3 id="パターン1-markdownをbodyに含める推奨"><a href="#パターン1-markdownをbodyに含める推奨"><!--[-->パターン1: Markdownをbodyに含める（推奨）<!--]--></a></h3><p><!--[--><strong><!--[-->ファイル:<!--]--></strong> <code><!--[-->content/page.json<!--]--></code><!--]--></p><pre class="language-json shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">{
+</span></span><span class="line" line="2"><span class="sj4cs">  &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;ページタイトル&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="3"><span class="sj4cs">  &quot;description&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;説明文&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="4"><span class="sj4cs">  &quot;body&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;# 見出し</span><span class="sj4cs">\n\n</span><span class="sZZnC">::alert{type=</span><span class="sj4cs">\&quot;</span><span class="sZZnC">info</span><span class="sj4cs">\&quot;</span><span class="sZZnC">}</span><span class="sj4cs">\n</span><span class="sZZnC">JSONのbodyフィールドでもMDC構文が使えます</span><span class="sj4cs">\n</span><span class="sZZnC">::</span><span class="sj4cs">\n\n</span><span class="sZZnC">::card{title=</span><span class="sj4cs">\&quot;</span><span class="sZZnC">機能カード</span><span class="sj4cs">\&quot;</span><span class="sZZnC"> icon=</span><span class="sj4cs">\&quot;</span><span class="sZZnC">star</span><span class="sj4cs">\&quot;</span><span class="sZZnC">}</span><span class="sj4cs">\n</span><span class="sZZnC">カードの内容</span><span class="sj4cs">\n</span><span class="sZZnC">::&quot;
+</span></span><span class="line" line="5"><span class="sVt8B">}
+</span></span></code><!--]--></pre><p><!--[--><strong><!--[-->注意:<!--]--></strong> JSONでは改行を<code><!--[-->\n<!--]--></code>でエスケープする必要があり、読みにくくなります。<!--]--></p><h3 id="パターン2-ast構造で定義高度"><a href="#パターン2-ast構造で定義高度"><!--[-->パターン2: AST構造で定義（高度）<!--]--></a></h3><p><!--[--><strong><!--[-->data-component属性パターン<!--]--></strong><!--]--></p><pre class="language-json shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">{
+</span></span><span class="line" line="2"><span class="sj4cs">  &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;カスタムページ&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="3"><span class="sj4cs">  &quot;body&quot;</span><span class="sVt8B">: {
+</span></span><span class="line" line="4"><span class="sj4cs">    &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;root&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="5"><span class="sj4cs">    &quot;children&quot;</span><span class="sVt8B">: [
+</span></span><span class="line" line="6"><span class="sVt8B">      {
+</span></span><span class="line" line="7"><span class="sj4cs">        &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;element&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="8"><span class="sj4cs">        &quot;tag&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;div&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="9"><span class="sj4cs">        &quot;properties&quot;</span><span class="sVt8B">: {
+</span></span><span class="line" line="10"><span class="sj4cs">          &quot;dataComponent&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Alert&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="11"><span class="sj4cs">          &quot;dataProps&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;{</span><span class="sj4cs">\&quot;</span><span class="sZZnC">type</span><span class="sj4cs">\&quot;</span><span class="sZZnC">: </span><span class="sj4cs">\&quot;</span><span class="sZZnC">warning</span><span class="sj4cs">\&quot;</span><span class="sZZnC">, </span><span class="sj4cs">\&quot;</span><span class="sZZnC">dismissible</span><span class="sj4cs">\&quot;</span><span class="sZZnC">: true}&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="12"><span class="sj4cs">          &quot;className&quot;</span><span class="sVt8B">: [</span><span class="sZZnC">&quot;component-placeholder&quot;</span><span class="sVt8B">]
+</span></span><span class="line" line="13"><span class="sVt8B">        },
+</span></span><span class="line" line="14"><span class="sj4cs">        &quot;children&quot;</span><span class="sVt8B">: [
+</span></span><span class="line" line="15"><span class="sVt8B">          {
+</span></span><span class="line" line="16"><span class="sj4cs">            &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;text&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="17"><span class="sj4cs">            &quot;value&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Alert component placeholder&quot;
+</span></span><span class="line" line="18"><span class="sVt8B">          }
+</span></span><span class="line" line="19"><span class="sVt8B">        ]
+</span></span><span class="line" line="20"><span class="sVt8B">      },
+</span></span><span class="line" line="21"><span class="sVt8B">      {
+</span></span><span class="line" line="22"><span class="sj4cs">        &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;element&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="23"><span class="sj4cs">        &quot;tag&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;div&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="24"><span class="sj4cs">        &quot;properties&quot;</span><span class="sVt8B">: {
+</span></span><span class="line" line="25"><span class="sj4cs">          &quot;dataComponent&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;FeatureCard&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="26"><span class="sj4cs">          &quot;dataProps&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;{</span><span class="sj4cs">\&quot;</span><span class="sZZnC">title</span><span class="sj4cs">\&quot;</span><span class="sZZnC">: </span><span class="sj4cs">\&quot;</span><span class="sZZnC">高速</span><span class="sj4cs">\&quot;</span><span class="sZZnC">, </span><span class="sj4cs">\&quot;</span><span class="sZZnC">icon</span><span class="sj4cs">\&quot;</span><span class="sZZnC">: </span><span class="sj4cs">\&quot;</span><span class="sZZnC">🚀</span><span class="sj4cs">\&quot;</span><span class="sZZnC">, </span><span class="sj4cs">\&quot;</span><span class="sZZnC">color</span><span class="sj4cs">\&quot;</span><span class="sZZnC">: </span><span class="sj4cs">\&quot;</span><span class="sZZnC">blue</span><span class="sj4cs">\&quot;</span><span class="sZZnC">}&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="27"><span class="sj4cs">          &quot;className&quot;</span><span class="sVt8B">: [</span><span class="sZZnC">&quot;component-placeholder&quot;</span><span class="sVt8B">]
+</span></span><span class="line" line="28"><span class="sVt8B">        },
+</span></span><span class="line" line="29"><span class="sj4cs">        &quot;children&quot;</span><span class="sVt8B">: [
+</span></span><span class="line" line="30"><span class="sVt8B">          {
+</span></span><span class="line" line="31"><span class="sj4cs">            &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;text&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="32"><span class="sj4cs">            &quot;value&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;FeatureCard placeholder&quot;
+</span></span><span class="line" line="33"><span class="sVt8B">          }
+</span></span><span class="line" line="34"><span class="sVt8B">        ]
+</span></span><span class="line" line="35"><span class="sVt8B">      }
+</span></span><span class="line" line="36"><span class="sVt8B">    ]
+</span></span><span class="line" line="37"><span class="sVt8B">  }
+</span></span><span class="line" line="38"><span class="sVt8B">}
+</span></span></code><!--]--></pre><hr><h2 id="実用パターン集"><a href="#実用パターン集"><!--[-->実用パターン集<!--]--></a></h2><h3 id="_1-alert-コンポーネント"><a href="#_1-alert-コンポーネント"><!--[-->1. Alert コンポーネント<!--]--></a></h3><h4 id="markdown"><a href="#markdown"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>&lt;!-- 基本 --&gt;
+</span></span><span class="line" line="2"><span>::alert
+</span></span><span class="line" line="3"><span>メッセージ
+</span></span><span class="line" line="4"><span>::
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span>&lt;!-- 種類指定 --&gt;
+</span></span><span class="line" line="7"><span>::alert{type=&quot;warning&quot;}
+</span></span><span class="line" line="8"><span>警告メッセージ
+</span></span><span class="line" line="9"><span>::
+</span></span><span class="line" line="10"><span emptylineplaceholder="true">
+</span></span><span class="line" line="11"><span>&lt;!-- 閉じるボタン付き --&gt;
+</span></span><span class="line" line="12"><span>::alert{type=&quot;error&quot; dismissible}
+</span></span><span class="line" line="13"><span>エラーメッセージ
+</span></span><span class="line" line="14"><span>::
+</span></span></code><!--]--></pre><h4 id="yaml-1"><a href="#yaml-1"><!--[-->YAML<!--]--></a></h4><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">body</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="2"><span class="sZZnC">  ::alert{type=&quot;info&quot;}
+</span></span><span class="line" line="3"><span class="sZZnC">  情報メッセージ
+</span></span><span class="line" line="4"><span class="sZZnC">  ::
+</span></span></code><!--]--></pre><h4 id="jsonmarkdown-string"><a href="#jsonmarkdown-string"><!--[-->JSON（Markdown string）<!--]--></a></h4><pre class="language-json shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">{
+</span></span><span class="line" line="2"><span class="sj4cs">  &quot;body&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;::alert{type=</span><span class="sj4cs">\&quot;</span><span class="sZZnC">success</span><span class="sj4cs">\&quot;</span><span class="sZZnC">}</span><span class="sj4cs">\n</span><span class="sZZnC">成功メッセージ</span><span class="sj4cs">\n</span><span class="sZZnC">::&quot;
+</span></span><span class="line" line="3"><span class="sVt8B">}
+</span></span></code><!--]--></pre><hr><h3 id="_2-card-コンポーネント"><a href="#_2-card-コンポーネント"><!--[-->2. Card コンポーネント<!--]--></a></h3><h4 id="markdown-1"><a href="#markdown-1"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::card
+</span></span><span class="line" line="2"><span>---
+</span></span><span class="line" line="3"><span>title: カードタイトル
+</span></span><span class="line" line="4"><span>icon: rocket
+</span></span><span class="line" line="5"><span>color: blue
+</span></span><span class="line" line="6"><span>---
+</span></span><span class="line" line="7"><span>カードの内容
+</span></span><span class="line" line="8"><span>::
+</span></span></code><!--]--></pre><h4 id="yaml-2"><a href="#yaml-2"><!--[-->YAML<!--]--></a></h4><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">body</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="2"><span class="sZZnC">  ::card{title=&quot;製品A&quot; icon=&quot;star&quot; color=&quot;purple&quot;}
+</span></span><span class="line" line="3"><span class="sZZnC">  製品Aの説明
+</span></span><span class="line" line="4"><span class="sZZnC">  ::
+</span></span></code><!--]--></pre><hr><h3 id="_3-hero-コンポーネント"><a href="#_3-hero-コンポーネント"><!--[-->3. Hero コンポーネント<!--]--></a></h3><h4 id="markdown-2"><a href="#markdown-2"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::hero
+</span></span><span class="line" line="2"><span>サイトタイトル
+</span></span><span class="line" line="3"><span emptylineplaceholder="true">
+</span></span><span class="line" line="4"><span>#description
+</span></span><span class="line" line="5"><span>サイトの説明文がここに入ります
+</span></span><span class="line" line="6"><span emptylineplaceholder="true">
+</span></span><span class="line" line="7"><span>#cta
+</span></span><span class="line" line="8"><span>[今すぐ始める](/start)
+</span></span><span class="line" line="9"><span>::
+</span></span></code><!--]--></pre><h4 id="yaml-3"><a href="#yaml-3"><!--[-->YAML<!--]--></a></h4><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">body</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="2"><span class="sZZnC">  ::hero
+</span></span><span class="line" line="3"><span class="sZZnC">  YAMLで定義したヒーロー
+</span></span><span class="line" line="4"><span emptylineplaceholder="true">
+</span></span><span class="line" line="5"><span class="sZZnC">  #description
+</span></span><span class="line" line="6"><span class="sZZnC">  YAML bodyフィールドからの呼び出し
+</span></span><span class="line" line="7"><span emptylineplaceholder="true">
+</span></span><span class="line" line="8"><span class="sZZnC">  #cta
+</span></span><span class="line" line="9"><span class="sZZnC">  [詳細を見る](/details)
+</span></span><span class="line" line="10"><span class="sZZnC">  ::
+</span></span></code><!--]--></pre><hr><h3 id="_4-tabs-コンポーネント"><a href="#_4-tabs-コンポーネント"><!--[-->4. Tabs コンポーネント<!--]--></a></h3><h4 id="markdown-3"><a href="#markdown-3"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::tabs
+</span></span><span class="line" line="2"><span>  :::tab{label=&quot;概要&quot;}
+</span></span><span class="line" line="3"><span>  # 概要
+</span></span><span class="line" line="4"><span emptylineplaceholder="true">
+</span></span><span class="line" line="5"><span>  プロジェクトの概要です
+</span></span><span class="line" line="6"><span>  :::
+</span></span><span class="line" line="7"><span emptylineplaceholder="true">
+</span></span><span class="line" line="8"><span>  :::tab{label=&quot;機能&quot;}
+</span></span><span class="line" line="9"><span>  # 機能
+</span></span><span class="line" line="10"><span emptylineplaceholder="true">
+</span></span><span class="line" line="11"><span>  - 機能1
+</span></span><span class="line" line="12"><span>  - 機能2
+</span></span><span class="line" line="13"><span>  :::
+</span></span><span class="line" line="14"><span emptylineplaceholder="true">
+</span></span><span class="line" line="15"><span>  :::tab{label=&quot;価格&quot;}
+</span></span><span class="line" line="16"><span>  # 価格
+</span></span><span class="line" line="17"><span emptylineplaceholder="true">
+</span></span><span class="line" line="18"><span>  $29/月
+</span></span><span class="line" line="19"><span>  :::
+</span></span><span class="line" line="20"><span>::
+</span></span></code><!--]--></pre><hr><h3 id="_5-featurecardカスタム"><a href="#_5-featurecardカスタム"><!--[-->5. FeatureCard（カスタム）<!--]--></a></h3><h4 id="markdown-4"><a href="#markdown-4"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::feature-card{title=&quot;高速パフォーマンス&quot; icon=&quot;🚀&quot; color=&quot;blue&quot;}
+</span></span><span class="line" line="2"><span>最適化されたアルゴリズムで高速処理を実現
+</span></span><span class="line" line="3"><span>::
+</span></span></code><!--]--></pre><h4 id="yaml-4"><a href="#yaml-4"><!--[-->YAML<!--]--></a></h4><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="s9eBZ">body</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="2"><span class="sZZnC">  ::feature-card{title=&quot;セキュア&quot; icon=&quot;🔒&quot; color=&quot;green&quot;}
+</span></span><span class="line" line="3"><span class="sZZnC">  エンタープライズグレードのセキュリティ
+</span></span><span class="line" line="4"><span class="sZZnC">  ::
+</span></span></code><!--]--></pre><hr><h3 id="_6-grid-layout"><a href="#_6-grid-layout"><!--[-->6. Grid Layout<!--]--></a></h3><h4 id="markdown-5"><a href="#markdown-5"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::grid{cols=&quot;3&quot;}
+</span></span><span class="line" line="2"><span>  :::card{title=&quot;機能1&quot;}
+</span></span><span class="line" line="3"><span>  説明1
+</span></span><span class="line" line="4"><span>  :::
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span>  :::card{title=&quot;機能2&quot;}
+</span></span><span class="line" line="7"><span>  説明2
+</span></span><span class="line" line="8"><span>  :::
+</span></span><span class="line" line="9"><span emptylineplaceholder="true">
+</span></span><span class="line" line="10"><span>  :::card{title=&quot;機能3&quot;}
+</span></span><span class="line" line="11"><span>  説明3
+</span></span><span class="line" line="12"><span>  :::
+</span></span><span class="line" line="13"><span>::
+</span></span></code><!--]--></pre><hr><h3 id="_7-code-block特殊"><a href="#_7-code-block特殊"><!--[-->7. Code Block（特殊）<!--]--></a></h3><h4 id="markdown-6"><a href="#markdown-6"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::code-group
+</span></span><span class="line" line="2"><span>  :::code{filename=&quot;index.js&quot; language=&quot;javascript&quot;}
+</span></span><span class="line" line="3"><span>  ```javascript
+</span></span><span class="line" line="4"><span>  console.log(&#39;Hello&#39;)
+</span></span></code><!--]--></pre><p><!--[-->:::<!--]--></p><code filename="style.css" language="css" class="shiki shiki-themes github-light github-dark" style=""><!--[--><span class="s9eBZ">body</span><span class="sVt8B"> { </span><span class="sj4cs">margin</span><span class="sVt8B">: </span><span class="sj4cs">0</span><span class="sVt8B">; }
+</span><!--]--></code><p><!--[-->::<!--]--></p><pre class="language-text"><!--[--><code>
+---
+
+### 8. Callout
+
+#### Markdown
+
+```markdown
+::callout{type=&quot;note&quot;}
+これは注意書きです
+::
+
+::callout{type=&quot;tip&quot;}
+💡 ヒント: この方法が推奨されます
+::
+
+::callout{type=&quot;warning&quot;}
+⚠️ 警告: この操作は取り消せません
+::
+</code><!--]--></pre><hr><h3 id="_9-button-group"><a href="#_9-button-group"><!--[-->9. Button Group<!--]--></a></h3><h4 id="markdown-7"><a href="#markdown-7"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::button-group
+</span></span><span class="line" line="2"><span>  :::button{href=&quot;/signup&quot; variant=&quot;primary&quot;}
+</span></span><span class="line" line="3"><span>  無料で始める
+</span></span><span class="line" line="4"><span>  :::
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span>  :::button{href=&quot;/demo&quot; variant=&quot;secondary&quot;}
+</span></span><span class="line" line="7"><span>  デモを見る
+</span></span><span class="line" line="8"><span>  :::
+</span></span><span class="line" line="9"><span>::
+</span></span></code><!--]--></pre><hr><h3 id="_10-image-with-caption"><a href="#_10-image-with-caption"><!--[-->10. Image with Caption<!--]--></a></h3><h4 id="markdown-8"><a href="#markdown-8"><!--[-->Markdown<!--]--></a></h4><pre class="language-markdown shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span>::figure
+</span></span><span class="line" line="2"><span>  :::image{src=&quot;/images/screenshot.png&quot; alt=&quot;スクリーンショット&quot;}
+</span></span><span class="line" line="3"><span>  :::
+</span></span><span class="line" line="4"><span emptylineplaceholder="true">
+</span></span><span class="line" line="5"><span>  #caption
+</span></span><span class="line" line="6"><span>  図1: アプリケーションのスクリーンショット
+</span></span><span class="line" line="7"><span>::
+</span></span></code><!--]--></pre><hr><h2 id="ハイブリッドパターン"><a href="#ハイブリッドパターン"><!--[-->ハイブリッドパターン<!--]--></a></h2><h3 id="パターン1-yaml-markdown"><a href="#パターン1-yaml-markdown"><!--[-->パターン1: YAML + Markdown<!--]--></a></h3><p><!--[--><strong><!--[-->ファイル:<!--]--></strong> <code><!--[-->content/product.yml<!--]--></code><!--]--></p><pre class="language-yaml shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sJ8bj"># メタデータ
+</span></span><span class="line" line="2"><span class="s9eBZ">name</span><span class="sVt8B">: </span><span class="sZZnC">製品A
+</span></span><span class="line" line="3"><span class="s9eBZ">price</span><span class="sVt8B">: </span><span class="sj4cs">99
+</span></span><span class="line" line="4"><span class="s9eBZ">category</span><span class="sVt8B">: </span><span class="sZZnC">electronics
+</span></span><span class="line" line="5"><span class="s9eBZ">tags</span><span class="sVt8B">:
+</span></span><span class="line" line="6"><span class="sVt8B">  - </span><span class="sZZnC">popular
+</span></span><span class="line" line="7"><span class="sVt8B">  - </span><span class="sZZnC">new
+</span></span><span class="line" line="8"><span emptylineplaceholder="true">
+</span></span><span class="line" line="9"><span class="sJ8bj"># Markdownコンテンツ
+</span></span><span class="line" line="10"><span class="s9eBZ">description</span><span class="sVt8B">: </span><span class="szBVR">|
+</span></span><span class="line" line="11"><span class="sZZnC">  ## 製品概要
+</span></span><span class="line" line="12"><span emptylineplaceholder="true">
+</span></span><span class="line" line="13"><span class="sZZnC">  ::alert{type=&quot;info&quot;}
+</span></span><span class="line" line="14"><span class="sZZnC">  期間限定セール中！
+</span></span><span class="line" line="15"><span class="sZZnC">  ::
+</span></span><span class="line" line="16"><span emptylineplaceholder="true">
+</span></span><span class="line" line="17"><span class="sZZnC">  ### 主な機能
+</span></span><span class="line" line="18"><span emptylineplaceholder="true">
+</span></span><span class="line" line="19"><span class="sZZnC">  ::grid{cols=&quot;2&quot;}
+</span></span><span class="line" line="20"><span class="sZZnC">    :::feature-card{title=&quot;高速&quot; icon=&quot;⚡&quot;}
+</span></span><span class="line" line="21"><span class="sZZnC">    処理速度2倍向上
+</span></span><span class="line" line="22"><span class="sZZnC">    :::
+</span></span><span class="line" line="23"><span emptylineplaceholder="true">
+</span></span><span class="line" line="24"><span class="sZZnC">    :::feature-card{title=&quot;省エネ&quot; icon=&quot;🌱&quot;}
+</span></span><span class="line" line="25"><span class="sZZnC">    消費電力50%削減
+</span></span><span class="line" line="26"><span class="sZZnC">    :::
+</span></span><span class="line" line="27"><span class="sZZnC">  ::
+</span></span><span class="line" line="28"><span emptylineplaceholder="true">
+</span></span><span class="line" line="29"><span class="sJ8bj"># 仕様（データ）
+</span></span><span class="line" line="30"><span class="s9eBZ">specifications</span><span class="sVt8B">:
+</span></span><span class="line" line="31"><span class="s9eBZ">  weight</span><span class="sVt8B">: </span><span class="sZZnC">500g
+</span></span><span class="line" line="32"><span class="s9eBZ">  dimensions</span><span class="sVt8B">: </span><span class="sZZnC">&quot;20x15x5cm&quot;
+</span></span><span class="line" line="33"><span class="s9eBZ">  color</span><span class="sVt8B">: </span><span class="sZZnC">Black
+</span></span></code><!--]--></pre><p><!--[--><strong><!--[-->ページでの利用:<!--]--></strong><!--]--></p><pre class="language-vue shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">&lt;</span><span class="s9eBZ">script</span><span class="sScJk"> setup</span><span class="sScJk"> lang</span><span class="sVt8B">=</span><span class="sZZnC">&quot;ts&quot;</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="2"><span class="szBVR">const</span><span class="sVt8B"> { </span><span class="s4XuR">data</span><span class="sVt8B">: </span><span class="sj4cs">product</span><span class="sVt8B"> } </span><span class="szBVR">=</span><span class="szBVR"> await</span><span class="sScJk"> useAsyncData</span><span class="sVt8B">(() </span><span class="szBVR">=&gt;
+</span></span><span class="line" line="3"><span class="sScJk">  queryCollection</span><span class="sVt8B">(</span><span class="sZZnC">&#39;products&#39;</span><span class="sVt8B">).</span><span class="sScJk">path</span><span class="sVt8B">(</span><span class="sZZnC">&#39;/product-a&#39;</span><span class="sVt8B">).</span><span class="sScJk">first</span><span class="sVt8B">()
+</span></span><span class="line" line="4"><span class="sVt8B">)
+</span></span><span class="line" line="5"><span class="sVt8B">&lt;/</span><span class="s9eBZ">script</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="6"><span emptylineplaceholder="true">
+</span></span><span class="line" line="7"><span class="sVt8B">&lt;</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="8"><span class="sVt8B">  &lt;</span><span class="s9eBZ">div</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="9"><span class="sVt8B">    &lt;</span><span class="s9eBZ">h1</span><span class="sVt8B">&gt;{{ product.name }}&lt;/</span><span class="s9eBZ">h1</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="10"><span class="sVt8B">    &lt;</span><span class="s9eBZ">p</span><span class="sScJk"> class</span><span class="sVt8B">=</span><span class="sZZnC">&quot;price&quot;</span><span class="sVt8B">&gt;${{ product.price }}&lt;/</span><span class="s9eBZ">p</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="11"><span emptylineplaceholder="true">
+</span></span><span class="line" line="12"><span class="sJ8bj">    &lt;!-- Markdownコンテンツをレンダリング --&gt;
+</span></span><span class="line" line="13"><span class="sVt8B">    &lt;</span><span class="s9eBZ">ContentRenderer</span><span class="sVt8B"> :</span><span class="sScJk">value</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">product</span><span class="sZZnC">&quot;</span><span class="sVt8B"> /&gt;
+</span></span><span class="line" line="14"><span emptylineplaceholder="true">
+</span></span><span class="line" line="15"><span class="sJ8bj">    &lt;!-- データを直接利用 --&gt;
+</span></span><span class="line" line="16"><span class="sVt8B">    &lt;</span><span class="s9eBZ">div</span><span class="sScJk"> class</span><span class="sVt8B">=</span><span class="sZZnC">&quot;specs&quot;</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="17"><span class="sVt8B">      &lt;</span><span class="s9eBZ">h3</span><span class="sVt8B">&gt;仕様&lt;/</span><span class="s9eBZ">h3</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="18"><span class="sVt8B">      &lt;</span><span class="s9eBZ">ul</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="19"><span class="sVt8B">        &lt;</span><span class="s9eBZ">li</span><span class="sVt8B">&gt;重量: {{ product.specifications.weight }}&lt;/</span><span class="s9eBZ">li</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="20"><span class="sVt8B">        &lt;</span><span class="s9eBZ">li</span><span class="sVt8B">&gt;サイズ: {{ product.specifications.dimensions }}&lt;/</span><span class="s9eBZ">li</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="21"><span class="sVt8B">      &lt;/</span><span class="s9eBZ">ul</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="22"><span class="sVt8B">    &lt;/</span><span class="s9eBZ">div</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="23"><span class="sVt8B">  &lt;/</span><span class="s9eBZ">div</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="24"><span class="sVt8B">&lt;/</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span></code><!--]--></pre><hr><h3 id="パターン2-json-コンポーネント定義"><a href="#パターン2-json-コンポーネント定義"><!--[-->パターン2: JSON + コンポーネント定義<!--]--></a></h3><p><!--[--><strong><!--[-->ファイル:<!--]--></strong> <code><!--[-->content/landing.json<!--]--></code><!--]--></p><pre class="language-json shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">{
+</span></span><span class="line" line="2"><span class="sj4cs">  &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;ランディングページ&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="3"><span class="sj4cs">  &quot;layout&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;landing&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="4"><span class="sj4cs">  &quot;sections&quot;</span><span class="sVt8B">: [
+</span></span><span class="line" line="5"><span class="sVt8B">    {
+</span></span><span class="line" line="6"><span class="sj4cs">      &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;hero&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="7"><span class="sj4cs">      &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Welcome&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="8"><span class="sj4cs">      &quot;subtitle&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Build amazing things&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="9"><span class="sj4cs">      &quot;ctaText&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Get Started&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="10"><span class="sj4cs">      &quot;ctaLink&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;/signup&quot;
+</span></span><span class="line" line="11"><span class="sVt8B">    },
+</span></span><span class="line" line="12"><span class="sVt8B">    {
+</span></span><span class="line" line="13"><span class="sj4cs">      &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;features&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="14"><span class="sj4cs">      &quot;items&quot;</span><span class="sVt8B">: [
+</span></span><span class="line" line="15"><span class="sVt8B">        {
+</span></span><span class="line" line="16"><span class="sj4cs">          &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Fast&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="17"><span class="sj4cs">          &quot;description&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Lightning fast performance&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="18"><span class="sj4cs">          &quot;icon&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;⚡&quot;
+</span></span><span class="line" line="19"><span class="sVt8B">        },
+</span></span><span class="line" line="20"><span class="sVt8B">        {
+</span></span><span class="line" line="21"><span class="sj4cs">          &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Secure&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="22"><span class="sj4cs">          &quot;description&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Enterprise-grade security&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="23"><span class="sj4cs">          &quot;icon&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;🔒&quot;
+</span></span><span class="line" line="24"><span class="sVt8B">        }
+</span></span><span class="line" line="25"><span class="sVt8B">      ]
+</span></span><span class="line" line="26"><span class="sVt8B">    },
+</span></span><span class="line" line="27"><span class="sVt8B">    {
+</span></span><span class="line" line="28"><span class="sj4cs">      &quot;type&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;cta&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="29"><span class="sj4cs">      &quot;title&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Ready to start?&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="30"><span class="sj4cs">      &quot;buttonText&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;Sign Up Free&quot;</span><span class="sVt8B">,
+</span></span><span class="line" line="31"><span class="sj4cs">      &quot;buttonLink&quot;</span><span class="sVt8B">: </span><span class="sZZnC">&quot;/signup&quot;
+</span></span><span class="line" line="32"><span class="sVt8B">    }
+</span></span><span class="line" line="33"><span class="sVt8B">  ]
+</span></span><span class="line" line="34"><span class="sVt8B">}
+</span></span></code><!--]--></pre><p><!--[--><strong><!--[-->ページでの処理:<!--]--></strong><!--]--></p><pre class="language-vue shiki shiki-themes github-light github-dark" style=""><!--[--><code><span class="line" line="1"><span class="sVt8B">&lt;</span><span class="s9eBZ">script</span><span class="sScJk"> setup</span><span class="sScJk"> lang</span><span class="sVt8B">=</span><span class="sZZnC">&quot;ts&quot;</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="2"><span class="szBVR">const</span><span class="sVt8B"> { </span><span class="s4XuR">data</span><span class="sVt8B">: </span><span class="sj4cs">page</span><span class="sVt8B"> } </span><span class="szBVR">=</span><span class="szBVR"> await</span><span class="sScJk"> useAsyncData</span><span class="sVt8B">(() </span><span class="szBVR">=&gt;
+</span></span><span class="line" line="3"><span class="sScJk">  queryCollection</span><span class="sVt8B">(</span><span class="sZZnC">&#39;content&#39;</span><span class="sVt8B">).</span><span class="sScJk">path</span><span class="sVt8B">(</span><span class="sZZnC">&#39;/landing&#39;</span><span class="sVt8B">).</span><span class="sScJk">first</span><span class="sVt8B">()
+</span></span><span class="line" line="4"><span class="sVt8B">)
+</span></span><span class="line" line="5"><span emptylineplaceholder="true">
+</span></span><span class="line" line="6"><span class="szBVR">const</span><span class="sj4cs"> sectionComponents</span><span class="szBVR"> =</span><span class="sVt8B"> {
+</span></span><span class="line" line="7"><span class="sVt8B">  hero: </span><span class="sScJk">defineAsyncComponent</span><span class="sVt8B">(() </span><span class="szBVR">=&gt;</span><span class="szBVR"> import</span><span class="sVt8B">(</span><span class="sZZnC">&#39;~/components/sections/Hero.vue&#39;</span><span class="sVt8B">)),
+</span></span><span class="line" line="8"><span class="sVt8B">  features: </span><span class="sScJk">defineAsyncComponent</span><span class="sVt8B">(() </span><span class="szBVR">=&gt;</span><span class="szBVR"> import</span><span class="sVt8B">(</span><span class="sZZnC">&#39;~/components/sections/Features.vue&#39;</span><span class="sVt8B">)),
+</span></span><span class="line" line="9"><span class="sVt8B">  cta: </span><span class="sScJk">defineAsyncComponent</span><span class="sVt8B">(() </span><span class="szBVR">=&gt;</span><span class="szBVR"> import</span><span class="sVt8B">(</span><span class="sZZnC">&#39;~/components/sections/CTA.vue&#39;</span><span class="sVt8B">))
+</span></span><span class="line" line="10"><span class="sVt8B">}
+</span></span><span class="line" line="11"><span class="sVt8B">&lt;/</span><span class="s9eBZ">script</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="12"><span emptylineplaceholder="true">
+</span></span><span class="line" line="13"><span class="sVt8B">&lt;</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="14"><span class="sVt8B">  &lt;</span><span class="s9eBZ">div</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="15"><span class="sVt8B">    &lt;</span><span class="s9eBZ">component
+</span></span><span class="line" line="16"><span class="szBVR">      v-for</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">(section, index) </span><span class="szBVR">in</span><span class="sVt8B"> page.sections</span><span class="sZZnC">&quot;
+</span></span><span class="line" line="17"><span class="sVt8B">      :</span><span class="sScJk">key</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">index</span><span class="sZZnC">&quot;
+</span></span><span class="line" line="18"><span class="sVt8B">      :</span><span class="sScJk">is</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">sectionComponents[section.type]</span><span class="sZZnC">&quot;
+</span></span><span class="line" line="19"><span class="sScJk">      v-bind</span><span class="sVt8B">=</span><span class="sZZnC">&quot;</span><span class="sVt8B">section</span><span class="sZZnC">&quot;
+</span></span><span class="line" line="20"><span class="sVt8B">    /&gt;
+</span></span><span class="line" line="21"><span class="sVt8B">  &lt;/</span><span class="s9eBZ">div</span><span class="sVt8B">&gt;
+</span></span><span class="line" line="22"><span class="sVt8B">&lt;/</span><span class="s9eBZ">template</span><span class="sVt8B">&gt;
+</span></span></code><!--]--></pre><hr><h2 id="まとめ"><a href="#まとめ"><!--[-->まとめ<!--]--></a></h2><h3 id="推奨される方法"><a href="#推奨される方法"><!--[-->推奨される方法<!--]--></a></h3><table><!--[--><thead><!--[--><tr><!--[--><th><!--[-->ファイル形式<!--]--></th><th><!--[-->コンポーネント呼び出し方法<!--]--></th><th><!--[-->推奨度<!--]--></th><!--]--></tr><!--]--></thead><tbody><!--[--><tr><!--[--><td><!--[--><strong><!--[-->Markdown<!--]--></strong><!--]--></td><td><!--[-->MDC構文<!--]--></td><td><!--[-->⭐⭐⭐⭐⭐<!--]--></td><!--]--></tr><tr><!--[--><td><!--[--><strong><!--[-->YAML<!--]--></strong><!--]--></td><td><!--[-->bodyフィールドにMarkdown<!--]--></td><td><!--[-->⭐⭐⭐⭐<!--]--></td><!--]--></tr><tr><!--[--><td><!--[--><strong><!--[-->JSON<!--]--></strong><!--]--></td><td><!--[-->bodyフィールドにMarkdown（エスケープ）<!--]--></td><td><!--[-->⭐⭐⭐<!--]--></td><!--]--></tr><tr><!--[--><td><!--[--><strong><!--[-->YAML/JSON<!--]--></strong><!--]--></td><td><!--[-->AST + data-component属性<!--]--></td><td><!--[-->⭐⭐（高度）<!--]--></td><!--]--></tr><tr><!--[--><td><!--[--><strong><!--[-->JSON<!--]--></strong><!--]--></td><td><!--[-->sections配列 + 動的コンポーネント<!--]--></td><td><!--[-->⭐⭐⭐⭐（ハイブリッド）<!--]--></td><!--]--></tr><!--]--></tbody><!--]--></table><h3 id="ベストプラクティス"><a href="#ベストプラクティス"><!--[-->ベストプラクティス<!--]--></a></h3><p><!--[-->✅ <strong><!--[-->Markdownファイルで記事・ドキュメント<!--]--></strong><!--]--></p><ul><!--[--><li><!--[-->MDC構文でコンポーネント呼び出し<!--]--></li><li><!--[-->最も書きやすく、読みやすい<!--]--></li><!--]--></ul><p><!--[-->✅ <strong><!--[-->YAMLファイルでデータ + コンテンツ<!--]--></strong><!--]--></p><ul><!--[--><li><!--[-->メタデータはYAML<!--]--></li><li><!--[-->コンテンツ部分はbodyフィールドにMarkdown<!--]--></li><li><!--[-->MDC構文が使える<!--]--></li><!--]--></ul><p><!--[-->✅ <strong><!--[-->JSONファイルでプログラム生成<!--]--></strong><!--]--></p><ul><!--[--><li><!--[-->データ構造を定義<!--]--></li><li><!--[-->sections配列で構造化<!--]--></li><li><!--[-->ページ側で動的にコンポーネント配置<!--]--></li><!--]--></ul><p><!--[-->❌ <strong><!--[-->避けるべきパターン<!--]--></strong><!--]--></p><ul><!--[--><li><!--[-->JSONに直接Markdown文字列（エスケープが煩雑）<!--]--></li><li><!--[-->AST構造でVueコンポーネント模倣（複雑で保守性が低い）<!--]--></li><!--]--></ul><hr><h2 id="参考リンク"><a href="#参考リンク"><!--[-->参考リンク<!--]--></a></h2><ul><!--[--><li><!--[--><a href="https://content.nuxt.com/docs/files/markdown" rel="nofollow"><!--[-->MDC構文ドキュメント<!--]--></a><!--]--></li><li><!--[--><a href="/nuxt-content-summary" class=""><!--[-->Nuxt Content要約<!--]--></a><!--]--></li><li><!--[--><a href="/nuxt-content-guide" class=""><!--[-->詳細ガイド<!--]--></a><!--]--></li><!--]--></ul><hr><p><!--[--><strong><!--[-->最終更新:<!--]--></strong> 2025-01-18<!--]--></p><style>html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .dark .shiki span {color: var(--shiki-dark);background: var(--shiki-dark-bg);font-style: var(--shiki-dark-font-style);font-weight: var(--shiki-dark-font-weight);text-decoration: var(--shiki-dark-text-decoration);}html.dark .shiki span {color: var(--shiki-dark);background: var(--shiki-dark-bg);font-style: var(--shiki-dark-font-style);font-weight: var(--shiki-dark-font-weight);text-decoration: var(--shiki-dark-text-decoration);}html pre.shiki code .s9eBZ, html code.shiki .s9eBZ{--shiki-default:#22863A;--shiki-dark:#85E89D}html pre.shiki code .sVt8B, html code.shiki .sVt8B{--shiki-default:#24292E;--shiki-dark:#E1E4E8}html pre.shiki code .sZZnC, html code.shiki .sZZnC{--shiki-default:#032F62;--shiki-dark:#9ECBFF}html pre.shiki code .szBVR, html code.shiki .szBVR{--shiki-default:#D73A49;--shiki-dark:#F97583}html pre.shiki code .sJ8bj, html code.shiki .sJ8bj{--shiki-default:#6A737D;--shiki-dark:#6A737D}html pre.shiki code .sScJk, html code.shiki .sScJk{--shiki-default:#6F42C1;--shiki-dark:#B392F0}html pre.shiki code .sj4cs, html code.shiki .sj4cs{--shiki-default:#005CC5;--shiki-dark:#79B8FF}html pre.shiki code .s4XuR, html code.shiki .s4XuR{--shiki-default:#E36209;--shiki-dark:#FFAB70}</style></div></div><!--]--></div><div id="teleports"></div><script type="application/json" data-nuxt-data="nuxt-app" data-ssr="true" id="__NUXT_DATA__" data-src="/component-patterns/_payload.json?0ab3069c-ab64-4151-98ee-55cf9c7d7417">[{"state":1,"once":3,"_errors":4,"serverRendered":7,"path":8,"prerenderedAt":9},["Reactive",2],{},["Set"],["ShallowReactive",5],{"component-patterns":6},null,true,"/component-patterns",1760867873285]</script>
+<script>window.__NUXT__={};window.__NUXT__.config={public:{content:{wsUrl:""},mdc:{components:{prose:true,map:{}},headings:{anchorLinks:{h1:false,h2:true,h3:true,h4:true,h5:false,h6:false}}},preview:{api:"https://api.nuxt.studio",iframeMessagingAllowedOrigins:""}},app:{baseURL:"/",buildId:"0ab3069c-ab64-4151-98ee-55cf9c7d7417",buildAssetsDir:"/_nuxt/",cdnURL:""}}</script></body></html>
