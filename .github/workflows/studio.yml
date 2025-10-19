@@ -55,6 +55,11 @@ jobs:
           version: ${{ matrix.node }}
           cache: ${{ steps.pkgman.outputs.cache }}
 
+      - name: Install system dependencies for better-sqlite3
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python3
+
       - name: Install dependencies
         run: ${{ steps.pkgman.outputs.package_manager }} install
 
